@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <a href="/authors">Authors</a>
+    <a href="/books">Books</a>
+    <a href="/">Homepage</a>
+
+    <h1> Add a book</h1>
+    <form action="{{ url_for('add') }}" method="POST">
+        <input type="text" placeholder="Author" name="author"><br>
+        <input type="text" placeholder="Book" name="book"><br>
+        <button>Add</button>
+
+
+    </form>
+
+
+</body>
+</html>

@@ -62,4 +62,16 @@ def authors():
 def add():
     f = request.form
     print(f["author"], f["book"])
+    excel = load_workbook("tales.xlsx")
+    page = excel["Sheet1"]
+    last = len(page["A"]) + 1 
+
+    page[f"A{last}"] = f["book"]
+    page[f"B{last}"] = f["author"]
+    excel.save("tales.xlsx")
+
+
+
+
     return "Success!"
+

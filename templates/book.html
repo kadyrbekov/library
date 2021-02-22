@@ -11,7 +11,7 @@
     <title>Document</title>
 </head>
 <body>
-
+     
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <!-- Brand/logo -->
         <a class="navbar-brand" href="#">Readers Hideout</a>
@@ -28,24 +28,26 @@
             <a class="nav-link" href="/">Home</a>
           </li>
         </ul>
-      </nav>
+    </nav>
 
-    
-    <div class="container" align='center'>
-        <h1> Add a book</h1>
-        <form action="{{ url_for('add') }}" method="POST">
-          <div class="form-group">
-            <input type="text" placeholder="Author" name="author"><br>
-          </div>
-          <div class="form-group">
-            <input type="text" placeholder="Book" name="book"><br>
-            <button class="btn btn-primary">Add</button>
-          </div>
+    <div class="container">
+       
+        <hr>
+        <div class="container">
+            <h2>{{ obj.0 }}</h2>
+            <h5>{{ obj.1 }}</h5>
 
+            {% if obj.2 %}
+                <img src="{{ obj.2 }}" alt="tale_photo">
+            {% endif %}
 
-        </form>
+            <a class="btn btn-warning btn-lg" href="{{ url_for('book_edit', num=obj.3) }}">Change</a>
+        
+        </div>
     </div>
 
+
+   
 
 </body>
 </html>

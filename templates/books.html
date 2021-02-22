@@ -3,16 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <title>Document</title>
 </head>
 <body>
-    <a href="/authors">Authors</a>
-    <a href="/books">Books</a>
-    <a href="/">Homepage</a>
-    <h1 style="color: aquamarine;">Тут будет список книг:</h1>
-    {% for object in object_list%}
-        <h2>{{ object.0 }} - {{ object.1 }}</h2>
-    {% endfor %}
+
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <!-- Brand/logo -->
+        <a class="navbar-brand" href="#">Readers Hideout</a>
+        
+        <!-- Links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/authors">Authors</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/books">Books</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+        </ul>
+    </nav>
+
+
+
+    <div class="container">
+        <h1 style="color: black;">Тут будет список книг:</h1>
+        <div class="list-group">
+            <div class="list-group-item list-group-item-action list-group-item-info">
+                {% for object in object_list%}
+                    
+                    <h2><a href="{{ url_for('book', num=loop.index-1) }}"> 
+                        {{ object.0 }} - {{ object.1 }}
+                    </h2>
+                    
+                {% endfor %}
+            </div>
+            
+        </div>
+    </div>
+
+
+    
     
 </body>
 </html>

@@ -11,10 +11,10 @@
     <title>Document</title>
 </head>
 <body>
-     
+  <!-- template -->
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <!-- Brand/logo -->
-        <a class="navbar-brand" href="#">Readers Hideout</a>
+        <a class="navbar-brand" href="/">Readers Hideout</a>
         
         <!-- Links -->
         <ul class="navbar-nav">
@@ -29,25 +29,23 @@
           </li>
         </ul>
     </nav>
+<!-- end template -->
 
+  <div class="container-fluid">
+  
+    <hr>
     <div class="container">
-       
-        <hr>
-        <div class="container">
-            <h2>{{ obj.0 }}</h2>
-            <h5>{{ obj.1 }}</h5>
-
-            {% if obj.2 %}
-                <img src="{{ obj.2 }}" alt="tale_photo">
-            {% endif %}
-
-            <a class="btn btn-warning btn-lg" href="{{ url_for('book_edit', num=obj.3) }}">Change</a>
+        <h2>{{ obj.name }}</h2>
+        <h5>{{ obj.author }}</h5>
         
-        </div>
+        {% if obj.image %}
+            <img src="{{ obj.image }}" alt="tale_photo">
+        {% endif %}
+        <br><br>
+        <a class="btn btn-warning btn-lg" href="{{ url_for('book_edit') }}">Изменить</a>
+        <br><br>
     </div>
-
-
-   
+  </div>
 
 </body>
 </html>

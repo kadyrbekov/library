@@ -17,22 +17,6 @@ def homepage():
 
 @app.route("/books/")
 def books():
-    #v1
-    # excel = load_workbook("tales.xlsx")
-    # page = excel["Sheet1"]
-
-
-    # object_list= [[tale.value, tale.offset(column=1).value] for tale in page["A"][1:]]
-    # print("Books page!")
-    # return render_template('books.html', object_list=object_list)
-
-    #v2
-
-    # session = sessionmaker(engine)()
-    # books = session.query("Book")
-    
-    # session.commit()
-    # print(books)
 
     with engine.connect() as con:
         books = con.execute("""SELECT * FROM "Book"; """)
@@ -41,41 +25,26 @@ def books():
 
 @app.route("/authors")
 def authors():
-    # excel = load_workbook("tales.xlsx")
-    # page = excel["Sheet1"]
-    # authors = {author.value for author in page["B"][1:]}
-    # authors_all = [author.value for author in page["B"][1:]]
-    # counts = []
-    # for author in authors_all:
-    #     i = authors_all.count(author)
-    #     counts.append(i)
-    
-    # return render_template("authors.html", authors=authors, authors_all=authors_all, counts=counts)
-
+   
     with engine.connect() as con:
         authors = con.execute("""SELECT author FROM "Book";""")
-    return render_template("authors_table.html", authors = authors)
+    return render_template("authors.html", authors = authors)
 
 
-@app.route("/book_edit", methods=["POST", "GET"])
-def book_edit():
-    #getting requests from fomr located at index.html
-    id_num = request.form.get("id_num")
-    name=request.form.get("name")
-    author=request.form.get("author")
-    image=request.form.get("image")
-    
+@app.route("/book_add", methods=["POST", "GET"]) #GET?
+def book_add():
+    if request.method == "POST":
+    #getting requests from fomr located at book_edit.html 
+        id_num = request.form.get("id_num")
+        name=request.form.get("name")
+        author=request.form.get("author")
+        image=request.form.get("image")
 
-    # with engine.connect() as con:
-    #     con.execute("INSERT INTO Book (id, name, author, image) f(:id, :name, :author, :image)",
-    #             {"id": id, "name": name, "author":author,"image":image}) 
-    #     con.commit() 
-    #using scoped session we do the sql query
-    db.execute(""" INSERT INTO "Book" (id_num, name, author, image) VALUES (:id_num, :name, :author, :image)""",
-            {"id_num":id_num, "name": name, "author": author,"image": image}) 
-    db.commit()
+        db.execute(""" INSERT INTO "Book" (id_num, name, author, image) VALUES (:id_num, :name, :author, :image)""",
+                {"id_num":id_num, "name": name, "author": author,"image": image}) 
+        db.commit()
 
-    return render_template("book_edit.html")
+    return render_template("book_add.html")
 
 
 @app.route("/book/<id>/")
@@ -83,6 +52,28 @@ def book(id):
     obj = db.execute(f"""SELECT * FROM "Book" WHERE id_num = {id}; """).first()
     db.commit()
     return render_template("book.html", obj=obj) # **kwargs
+
+
+# @app.route("/<int:id>/", methods=["GET", "POST"])
+# def db_book_update(id):
+#     message = ''
+#     if request.method == "POST":
+#         name = request.form.get("tale")
+#         author = request.form.get("author")
+#         image = request.form.get("image")
+#         db.execute(f'''
+#             UPDATE "Book"
+#             SET 
+#                 name='{name}',
+#                 author='{author}',
+#                 image='{image}'
+#             WHERE id={id};
+#         ''')
+#         db.commit()
+#         message = "Изменения сохранены"
+
+#     book_object = db.execute(f'SELECT * FROM "Book" WHERE id={id};').first()
+#     return render_template("database_book_update.html", book_object=book_object, message=message)
 
 
 # @app.route("/book/<num>/edit")

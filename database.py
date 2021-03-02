@@ -6,7 +6,8 @@ Base = declarative_base()
 
 class book(Base):
     __tablename__ = 'Book'
-    id_num = Column('id_num', Integer, Sequence('some_id_seq'), primary_key=True)
+    # Sequence('some_id_seq'),
+    id_num = Column('id_num', Integer, primary_key=True)
     name = Column(VARCHAR(255), nullable=False)
     author = Column(VARCHAR(255), nullable=False)
     image = Column(VARCHAR(255))

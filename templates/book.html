@@ -55,7 +55,7 @@
             <img src="{{ obj.image }}" alt="tale_photo">
         {% endif %}
         <br><br>
-        <a class="btn btn-warning btn-lg" href="#">Edit</a>
+        <a class="btn btn-warning btn-lg" href="{{ url_for('book_edit', id=obj.id_num) }}">Edit</a>
         <br><br>
     </div>
   </div>

@@ -54,6 +54,29 @@ def book(id):
     return render_template("book.html", obj=obj) # **kwargs
 
 
+@app.route("/<int:id>/", methods=["GET", "POST"])
+def book_edit(id):
+    message=''
+    if request.method == "POST":
+        name = request.form.get("tale")
+        author = request.form.get("author")
+        image = request.form.get("image")
+        db.execute(f'''
+            UPDATE "Book"
+            SET 
+                name='{name}',
+                author='{author}',
+                image='{image}'
+            WHERE id_num={id};
+        ''')
+        db.commit()
+
+    book_object = db.execute(f'SELECT * FROM "Book" WHERE id_num={id};').first()
+
+    return render_template("book_edit.html", book_object=book_object, message=message)
+
+
+
 # @app.route("/<int:id>/", methods=["GET", "POST"])
 # def db_book_update(id):
 #     message = ''

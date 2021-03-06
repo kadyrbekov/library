@@ -18,8 +18,23 @@ def homepage():
 @app.route("/books/")
 def books():
 
-    with engine.connect() as con:
-        books = con.execute("""SELECT * FROM "Book"; """)
+    # with engine.connect() as con:
+    #     books = con.execute("""SELECT * FROM "Book"; """)
+    if 'key_word' in request.args:
+        key_word = request.args.get("key_word")
+        session = sessionmaker(engine)()
+        books = session.execute(f"""
+            SELECT * FROM "Book"
+            WHERE name LIKE '%{key_word}%'
+                OR author LIKE '%{key_word}%'
+            ;
+        """)
+        session.commit()
+    else:
+        with engine.connect() as con:
+            books = con.execute("""SELECT * FROM "Book";""")
+            print(books)
+
     return render_template("books.html", object_list=books)
 
 
